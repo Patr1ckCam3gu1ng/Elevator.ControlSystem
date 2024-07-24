@@ -9,6 +9,10 @@ This project implements an elementary elevator control system for a building wit
 - When a car stops on a floor, it takes 10 seconds for passengers to enter/leave and then the car is ready to move again.
 
 ## Features
+- **CQRS Design Pattern**: Separates the responsibility of commands and queries, ensuring clear segregation of concerns.
+- **Serilog Logging**: Provides detailed logging information for monitoring and debugging.
+- **Continuous Status Updates**: Regularly displays the status of each elevator, including current floor and pending requests.
+
 
 - Generates random calls for the elevator on floors throughout the building.
 - Moves elevators to pick up passengers and disembark them.
@@ -26,5 +30,9 @@ The configuration settings are located in `appsettings.json`.
     "NumberOfFloors": 10,
     "MoveTimeSeconds": 10,
     "StopTimeSeconds": 10
+  },
+  "RequestSettings": {
+    "MaxRequests": 1,
+    "IntervalInSeconds": 60
   }
 }
