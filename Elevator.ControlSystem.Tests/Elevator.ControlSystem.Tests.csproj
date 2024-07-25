@@ -20,4 +20,10 @@
       <ProjectReference Include="..\Elevator.ControlSystem.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="testsettings.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

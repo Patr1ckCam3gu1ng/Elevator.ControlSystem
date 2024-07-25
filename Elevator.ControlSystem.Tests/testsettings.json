@@ -1,0 +1,11 @@
+{
+  "ElevatorSettings": {
+    "NumberOfElevators": 3,
+    "NumberOfFloors": 15,
+    "MoveTimeSeconds": 3,
+    "StopTimeSeconds": 5
+  },
+  "RequestSettings": {
+    "IntervalInSeconds": 30
+  }
+}
