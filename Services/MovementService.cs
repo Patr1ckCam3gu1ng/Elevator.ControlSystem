@@ -4,6 +4,9 @@ using Serilog;
 
 namespace Elevator.ControlSystem.Services;
 
+/// <summary>
+/// Provides services for handling elevator movements.
+/// </summary>
 public class MovementService : IMovementService
 {
     private readonly ElevatorSettings _settings;
@@ -13,6 +16,12 @@ public class MovementService : IMovementService
         _settings = settings ?? throw new ArgumentNullException(nameof(settings));
     }
 
+    /// <summary>
+    /// Processes the elevator requests.
+    /// </summary>
+    /// <param name="elevator">The elevator model.</param>
+    /// <param name="elevatorIndex">The index of the elevator.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
     public async Task ProcessElevatorRequests(ElevatorModel elevator, int elevatorIndex)
     {
         var previousFloor = -1;
@@ -23,7 +32,7 @@ public class MovementService : IMovementService
             {
                 if (elevator.RequestedFloors.Count != 0)
                 {
-                    if (elevator.State is "MovingUp" or "Stopped")
+                    if (elevator.State is Constants.MovingUp or Constants.Stopped)
                     {
                         var targetFloors = elevator.RequestedFloors
                             .Where(floor => floor > elevator.CurrentFloor)
@@ -32,7 +41,7 @@ public class MovementService : IMovementService
 
                         if (targetFloors.Count != 0)
                         {
-                            await ProcessFloors(elevator, targetFloors, "up", elevatorIndex);
+                            await ProcessFloors(elevator, targetFloors, Constants.Up, elevatorIndex);
                         }
                         else
                         {
@@ -40,10 +49,10 @@ public class MovementService : IMovementService
                             var lowerFloors = elevator.RequestedFloors
                                 .OrderBy(floor => floor)
                                 .ToList();
-                            await ProcessFloors(elevator, lowerFloors, "down", elevatorIndex);
+                            await ProcessFloors(elevator, lowerFloors, Constants.Down, elevatorIndex);
                         }
                     }
-                    else if (elevator.State == "MovingDown")
+                    else if (elevator.State == Constants.MovingDown)
                     {
                         var targetFloors = elevator.RequestedFloors
                             .Where(floor => floor < elevator.CurrentFloor)
@@ -52,7 +61,7 @@ public class MovementService : IMovementService
 
                         if (targetFloors.Count != 0)
                         {
-                            await ProcessFloors(elevator, targetFloors, "down", elevatorIndex);
+                            await ProcessFloors(elevator, targetFloors, Constants.Down, elevatorIndex);
                         }
                         else
                         {
@@ -60,7 +69,7 @@ public class MovementService : IMovementService
                             var higherFloors = elevator.RequestedFloors
                                 .OrderByDescending(floor => floor)
                                 .ToList();
-                            await ProcessFloors(elevator, higherFloors, "up", elevatorIndex);
+                            await ProcessFloors(elevator, higherFloors, Constants.Up, elevatorIndex);
                         }
                     }
                 }
@@ -100,9 +109,9 @@ public class MovementService : IMovementService
         elevator.RequestedFloors.RemoveAll(targetFloors.Contains);
 
         // Change the state of the elevator if no more requests in the current direction
-        if (!elevator.RequestedFloors.Any(floor => direction == "up" ? floor > elevator.CurrentFloor : floor < elevator.CurrentFloor))
+        if (!elevator.RequestedFloors.Any(floor => direction == Constants.Up ? floor > elevator.CurrentFloor : floor < elevator.CurrentFloor))
         {
-            elevator.State = "Stopped";
+            elevator.State = Constants.Stopped;
         }
     }
 
@@ -112,7 +121,7 @@ public class MovementService : IMovementService
         {
             while (elevator.CurrentFloor != targetFloor)
             {
-                if (direction == "up")
+                if (direction == Constants.Up)
                 {
                     if (elevator.CurrentFloor + 1 > _settings.NumberOfFloors)
                     {
@@ -149,10 +158,10 @@ public class MovementService : IMovementService
     {
         try
         {
-            if (elevator.State != "MovingUp")
+            if (elevator.State != Constants.MovingUp)
             {
                 Log.Information("Elevator {ElevatorIndex} starting to move up", elevatorIndex);
-                elevator.State = "MovingUp";
+                elevator.State = Constants.MovingUp;
             }
         }
         catch (Exception ex)
@@ -165,10 +174,10 @@ public class MovementService : IMovementService
     {
         try
         {
-            if (elevator.State != "MovingDown")
+            if (elevator.State != Constants.MovingDown)
             {
                 Log.Information("Elevator {ElevatorIndex} starting to move down", elevatorIndex);
-                elevator.State = "MovingDown";
+                elevator.State = Constants.MovingDown;
             }
         }
         catch (Exception ex)
@@ -178,13 +187,18 @@ public class MovementService : IMovementService
     }
 
     private void Stop(ElevatorModel elevator, int elevatorIndex)
+    /// <summary>
+    /// Moves the elevator to the specified floor.
+    /// </summary>
+    /// <param name="elevator">The elevator model.</param>
+    /// <param name="floor">The target floor.</param>
     {
         try
         {
-            if (elevator.State != "Stopped")
+            if (elevator.State != Constants.Stopped)
             {
                 Log.Information("Elevator {ElevatorIndex} stopping", elevatorIndex);
-                elevator.State = "Stopped";
+                elevator.State = Constants.Stopped;
             }
         }
         catch (Exception ex)

@@ -1,7 +1,7 @@
 namespace Elevator.ControlSystem.Models;
 
 /// <summary>
-/// Represents an elevator in the building.
+/// Represents an elevator within the building.
 /// </summary>
 public class ElevatorModel
 {
@@ -13,10 +13,10 @@ public class ElevatorModel
     /// <summary>
     /// Gets the list of requested floors.
     /// </summary>
-    public List<int> RequestedFloors { get; set; } = [];
+    public List<int> RequestedFloors { get; set; } = new List<int>();
 
     /// <summary>
     /// Gets or sets the current state of the elevator.
     /// </summary>
-    public string State { get; set; } = "Stopped";
+    public string State { get; set; } = Constants.Stopped;
 }

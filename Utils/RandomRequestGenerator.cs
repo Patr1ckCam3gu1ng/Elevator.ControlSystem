@@ -17,7 +17,7 @@ public static class RandomRequestGenerator
 
         var floor = random.Next(1, numberOfFloors + 1);
 
-        var direction = random.Next(0, 2) == 0 ? "up" : "down";
+        var direction = random.Next(0, 2) == 0 ? Constants.Up : Constants.Down;
 
         return (floor, direction);
     }

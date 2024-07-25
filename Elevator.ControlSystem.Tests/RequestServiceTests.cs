@@ -44,7 +44,7 @@ namespace Elevator.ControlSystem.Tests
         {
             // Arrange: Create a valid request (up from the third floor)
             const int floor = 3;
-            const string direction = "up";
+            const string direction = Constants.Up;
 
             // Act: Add the valid request
             _requestService?.AddRequest(_elevatorSystem!, _elevatorSettings!, floor, direction);
@@ -64,8 +64,8 @@ namespace Elevator.ControlSystem.Tests
             const int bottomFloor = 1;
 
             // Act: Attempt to add invalid requests
-            _requestService?.AddRequest(_elevatorSystem!, _elevatorSettings!, topFloor, "up");
-            _requestService?.AddRequest(_elevatorSystem!, _elevatorSettings!, bottomFloor, "down");
+            _requestService?.AddRequest(_elevatorSystem!, _elevatorSettings!, topFloor, Constants.Up);
+            _requestService?.AddRequest(_elevatorSystem!, _elevatorSettings!, bottomFloor, Constants.Down);
 
             // Assert: Verify that the invalid requests were not added
             Assert.IsFalse(_elevatorSystem?.Elevators.Any(e => e.RequestedFloors.Contains(topFloor)) ?? true);
@@ -81,9 +81,9 @@ namespace Elevator.ControlSystem.Tests
             // Arrange: Create multiple valid requests
             var requests = new[]
             {
-                new { Floor = 2, Direction = "up" },
-                new { Floor = 4, Direction = "down" },
-                new { Floor = 7, Direction = "up" }
+                new { Floor = 2, Direction = Constants.Up },
+                new { Floor = 4, Direction = Constants.Down },
+                new { Floor = 7, Direction = Constants.Up }
             };
 
             // Act: Add the valid requests
