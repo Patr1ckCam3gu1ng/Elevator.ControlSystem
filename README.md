@@ -10,11 +10,8 @@ This project implements an elementary elevator control system for a building wit
 
 ---
 ## Features
-- **CQRS Design Pattern**: Separates the responsibility of commands and queries, ensuring clear segregation of concerns.
-- **Serilog Logging**: Provides detailed logging information for monitoring and debugging.
-- **Continuous Status Updates**: Regularly displays the status of each elevator, including current floor and pending requests.
-
-
+- CQRS Design Pattern: Separates the responsibility of commands and queries, ensuring clear segregation of concerns.
+- Serilog Logging: Provides detailed logging information for monitoring and debugging.
 - Generates random calls for the elevator on floors throughout the building.
 - Moves elevators to pick up passengers and disembark them.
 - Ensures an "up" elevator keeps going up until it has no more passengers and the same for a "down" elevator.
@@ -40,7 +37,6 @@ The configuration settings are located in `appsettings.json`.
     "StopTimeSeconds": 10
   },
   "RequestSettings": {
-    "MaxRequests": 1,
     "IntervalInSeconds": 60
   }
 }

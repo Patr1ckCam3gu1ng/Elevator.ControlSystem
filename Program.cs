@@ -21,6 +21,7 @@ class Program
             Log.Information("Starting elevator system");
 
             var configuration = LoadConfiguration();
+            
             var serviceProvider = ConfigureServices(configuration);
 
             await InitializeElevatorSystem(serviceProvider);
@@ -113,7 +114,9 @@ class Program
         }
 
         _ = Task.Run(() => GenerateRandomRequests(commandHandler, elevatorSettings.NumberOfFloors, requestSettings.IntervalInSeconds));
+        
         elevatorService.ProcessRequests();
+        
         await DisplayElevatorStatus(queryHandler);
     }
 
@@ -132,8 +135,11 @@ class Program
         while (true)
         {
             var (floor, direction) = RandomRequestGenerator.GenerateRandomRequest(numberOfFloors);
+            
             var addRequestCommand = new AddElevatorRequestCommand(floor, direction);
+            
             commandHandler.Handle(addRequestCommand);
+            
             await Task.Delay(intervalInSeconds * 1000); // Delay for the specified interval
         }
     }
