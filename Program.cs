@@ -48,14 +48,14 @@ class Program
     }
 
     /// <summary>
-    /// Loads the application configuration from appsettings.json.
+    /// Loads the application configuration from appSettings.json.
     /// </summary>
     /// <returns>The loaded configuration.</returns>
     private static IConfiguration LoadConfiguration()
     {
         return new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile("appSettings.json", optional: false, reloadOnChange: true)
             .Build();
     }
 
@@ -108,7 +108,7 @@ class Program
 
         if (commandHandler == null || queryHandler == null || elevatorService == null || elevatorSettings == null || requestSettings == null)
         {
-            Log.Error("Failed to initialize services. Please check your configuration.");
+            Log.Error("Failed to initialize services. Please check your configuration");
             throw new InvalidOperationException("Failed to initialize services. Please check your configuration.");
         }
 
