@@ -92,6 +92,45 @@ ConfigurationTests
 - **ElevatorSystem_IsInitializedCorrectly**:
   - Tests that the elevator system is correctly initialized using the configuration settings.
 
-
-
 ---
+
+### Sample Output in Console Log
+
+```
+[07:57:14 INF] Starting elevator system
+[07:57:14 INF] Elevator 1 initialized at floor 1
+[07:57:14 INF] Elevator 2 initialized at floor 1
+[07:57:14 INF] Elevator 3 initialized at floor 1
+[07:57:14 INF] Elevator 4 initialized at floor 1
+[07:57:14 INF] Elevator system initialized with 4 elevators in total
+[07:57:14 INF]
+[07:57:14 INF] -----------------
+[07:57:14 INF] Car 1 is on floor 1
+[07:57:14 INF] Car 2 is on floor 1
+[07:57:14 INF] Car 3 is on floor 1
+[07:57:14 INF] Car 4 is on floor 1
+[07:57:14 INF] -----------------
+[07:57:14 INF]
+[07:57:14 INF] UP request on floor 2 received
+[07:57:15 INF] Car 4 is on floor 1
+[07:57:15 INF] Car 3 is on floor 1
+[07:57:15 INF] Car 2 is on floor 1
+[07:57:15 INF] Car 1 is on floor 1
+[07:57:15 INF] Elevator 1 starting to move up
+[07:57:15 INF] Elevator 1 is on floor 2
+[07:57:16 INF] -----------------
+[07:57:16 INF] Car 1 is on floor 2
+[07:57:16 INF] Car 2 is on floor 1
+[07:57:16 INF] Car 3 is on floor 1
+[07:57:16 INF] Car 4 is on floor 1
+[07:57:16 INF] -----------------
+[07:57:16 INF]
+[07:57:17 INF] Ignoring invalid request: DOWN request on floor 1
+[07:57:20 INF] UP request on floor 3 received
+[07:57:23 INF] DOWN request on floor 7 received
+[07:57:25 INF] Elevator 1 stopping
+[07:57:25 INF] Elevator 1 stopped at floor 2 for passengers to enter/leave
+[07:57:29 INF] DOWN request on floor 8 received
+[07:57:32 INF] DOWN request on floor 10 received
+[07:57:35 INF] Car 1 is on floor 2
+```
