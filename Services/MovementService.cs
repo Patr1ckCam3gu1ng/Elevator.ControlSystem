@@ -91,7 +91,7 @@ public class MovementService : IMovementService
             
             Stop(elevator, elevatorIndex);
             
-            Log.Information("Elevator {ElevatorIndex} stopping at floor {Floor} for passengers to enter/leave", elevatorIndex, elevator.CurrentFloor);
+            Log.Information("Elevator {ElevatorIndex} stopped at floor {Floor} for passengers to enter/leave", elevatorIndex, elevator.CurrentFloor);
             
             await Task.Delay(_settings.StopTimeSeconds * 1000); // Simulate time for passengers to enter/leave
         }
