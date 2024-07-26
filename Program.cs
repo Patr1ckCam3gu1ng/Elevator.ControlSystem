@@ -12,19 +12,23 @@ namespace Elevator.ControlSystem;
 
 class Program
 {
+    private const string ErrorMessage = "Failed to initialize services. Please check your configuration";
+
     static async Task Main(string[] args)
     {
         ConfigureLogging();
-        
+
         try
         {
             Log.Information("Starting elevator system");
 
             var configuration = LoadConfiguration();
-            
+
             var serviceProvider = ConfigureServices(configuration);
 
-            await InitializeElevatorSystem(serviceProvider);
+            InitializeElevatorSystem(serviceProvider);
+
+            await ExecuteElevatorSystem(serviceProvider);
         }
         catch (Exception ex)
         {
@@ -99,24 +103,36 @@ class Program
     /// Initializes the elevator system and starts processing requests.
     /// </summary>
     /// <param name="serviceProvider">The service provider for dependency injection.</param>
-    private static async Task InitializeElevatorSystem(ServiceProvider serviceProvider)
+    private static void InitializeElevatorSystem(ServiceProvider serviceProvider)
     {
         var commandHandler = serviceProvider.GetService<CommandHandler>();
         var queryHandler = serviceProvider.GetService<QueryHandler>();
-        var elevatorService = serviceProvider.GetService<IElevatorService>();
+
         var elevatorSettings = serviceProvider.GetService<ElevatorSettings>();
         var requestSettings = serviceProvider.GetService<RequestSettings>();
 
-        if (commandHandler == null || queryHandler == null || elevatorService == null || elevatorSettings == null || requestSettings == null)
+        if (commandHandler == null || queryHandler == null || elevatorSettings == null || requestSettings == null)
         {
-            Log.Error("Failed to initialize services. Please check your configuration");
-            throw new InvalidOperationException("Failed to initialize services. Please check your configuration.");
+            Log.Error(ErrorMessage);
+            throw new InvalidOperationException(ErrorMessage);
         }
 
         _ = Task.Run(() => GenerateRandomRequests(commandHandler, elevatorSettings.NumberOfFloors, requestSettings.IntervalInSeconds));
-        
+    }
+
+    private static async Task ExecuteElevatorSystem(ServiceProvider serviceProvider)
+    {
+        var elevatorService = serviceProvider.GetService<IElevatorService>();
+        var queryHandler = serviceProvider.GetService<QueryHandler>();
+
+        if (elevatorService == null || queryHandler == null)
+        {
+            Log.Error(ErrorMessage);
+            throw new InvalidOperationException(ErrorMessage);
+        }
+
         elevatorService.ProcessRequests();
-        
+
         await DisplayElevatorStatus(queryHandler);
     }
 
@@ -135,11 +151,11 @@ class Program
         while (true)
         {
             var (floor, direction) = RandomRequestGenerator.GenerateRandomRequest(numberOfFloors);
-            
+
             var addRequestCommand = new AddElevatorRequestCommand(floor, direction);
-            
+
             commandHandler.Handle(addRequestCommand);
-            
+
             await Task.Delay(intervalInSeconds * 1000); // Delay for the specified interval
         }
     }
@@ -183,9 +199,9 @@ class Program
     private static void LogUnhandledException(Exception ex)
     {
         Log.Fatal(ex, "An unhandled exception occurred");
-        
+
         Log.Information("An unexpected error occurred: {ExMessage}", ex.Message);
-        
+
         Environment.Exit(1); // Exit the application
     }
 
