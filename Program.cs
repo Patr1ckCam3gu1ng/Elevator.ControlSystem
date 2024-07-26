@@ -54,14 +54,14 @@ class Program
     }
 
     /// <summary>
-    /// Loads the application configuration from appSettings.json.
+    /// Loads the application configuration from appsettings.json.
     /// </summary>
     /// <returns>The loaded configuration.</returns>
     private static IConfiguration LoadConfiguration()
     {
         return new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appSettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
             .Build();
     }
 

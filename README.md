@@ -20,8 +20,10 @@ This project implements an elementary elevator control system for a building wit
 
 ## Prerequisites
 
-- .NET 5.0 SDK or later
-- Visual Studio 2019 or later (recommended)
+- **.NET 8.0 SDK** or later
+- Visual Studio 2022 or later (recommended)
+- Docker (for containerized deployment)
+
 ---
 
 ## Configuration
@@ -102,6 +104,18 @@ ConfigurationTests
 
 - **ElevatorSystem_IsInitializedCorrectly**:
   - Tests that the elevator system is correctly initialized using the configuration settings.
+
+---
+
+### Running with Docker
+
+The provided `Dockerfile` includes steps to build, test, and run the application.
+
+1. **Build the Docker Image:** Navigate to the root directory containing the `Dockerfile` and run:
+   `docker build -t elevator-control-system .`
+
+2. **Run the Docker Container:** Once the image is built, run the container:
+   `docker run -d --name elevator-control-system elevator-control-system`
 
 ---
 
