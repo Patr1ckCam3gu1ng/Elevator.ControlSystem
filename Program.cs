@@ -1,4 +1,5 @@
 ﻿using Elevator.ControlSystem.Commands;
+using Elevator.ControlSystem.Exceptions;
 using Elevator.ControlSystem.Models;
 using Elevator.ControlSystem.Queries;
 using Elevator.ControlSystem.Services;
@@ -114,9 +115,9 @@ class Program
         if (commandHandler == null || queryHandler == null || elevatorSettings == null || requestSettings == null)
         {
             Log.Error(ErrorMessage);
-            throw new InvalidOperationException(ErrorMessage);
+            throw new ElevatorControlSystemException(ErrorMessage);
         }
-
+        
         _ = Task.Run(() => GenerateRandomRequests(commandHandler, elevatorSettings.NumberOfFloors, requestSettings.IntervalInSeconds));
     }
 
@@ -128,7 +129,7 @@ class Program
         if (elevatorService == null || queryHandler == null)
         {
             Log.Error(ErrorMessage);
-            throw new InvalidOperationException(ErrorMessage);
+            throw new ElevatorControlSystemException(ErrorMessage);
         }
 
         elevatorService.ProcessRequests();
@@ -166,7 +167,7 @@ class Program
     /// <param name="queryHandler">The query handler to get the status.</param>
     private static async Task DisplayElevatorStatus(QueryHandler queryHandler)
     {
-        if (queryHandler == null) throw new ArgumentNullException(nameof(queryHandler));
+        if (queryHandler == null) throw new ElevatorControlSystemException(nameof(queryHandler));
 
         var previousStatus = string.Empty;
 

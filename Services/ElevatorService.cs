@@ -1,3 +1,4 @@
+using Elevator.ControlSystem.Exceptions;
 using Elevator.ControlSystem.Models;
 using Elevator.ControlSystem.Services.Interfaces;
 using Serilog;
@@ -27,10 +28,10 @@ public class ElevatorService : IElevatorService
         IRequestService requestService,
         IMovementService movementService)
     {
-        _elevatorSystem = elevatorSystem ?? throw new ArgumentNullException(nameof(elevatorSystem));
-        _settings = settings ?? throw new ArgumentNullException(nameof(settings));
-        _requestService = requestService ?? throw new ArgumentNullException(nameof(requestService));
-        _movementService = movementService ?? throw new ArgumentNullException(nameof(movementService));
+        _elevatorSystem = elevatorSystem ?? throw new ElevatorControlSystemException(nameof(elevatorSystem));
+        _settings = settings ?? throw new ElevatorControlSystemException(nameof(settings));
+        _requestService = requestService ?? throw new ElevatorControlSystemException(nameof(requestService));
+        _movementService = movementService ?? throw new ElevatorControlSystemException(nameof(movementService));
     }
 
     /// <summary>

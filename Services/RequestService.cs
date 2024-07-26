@@ -1,3 +1,4 @@
+using Elevator.ControlSystem.Exceptions;
 using Elevator.ControlSystem.Models;
 using Elevator.ControlSystem.Services.Interfaces;
 using Serilog;
@@ -33,7 +34,7 @@ public class RequestService : IRequestService
             {
                 Log.Error("No elevators are available in the system");
 
-                throw new InvalidOperationException("No elevators are available in the system.");
+                throw new ElevatorControlSystemException("No elevators are available in the system.");
             }
 
             // Find the nearest available elevator
@@ -46,7 +47,7 @@ public class RequestService : IRequestService
             if (nearestElevator == null)
             {
                 Log.Error("Failed to find the nearest elevator");
-                throw new InvalidOperationException("Failed to find the nearest elevator.");
+                throw new ElevatorControlSystemException("Failed to find the nearest elevator.");
             }
 
             // Add the request to the nearest elevator

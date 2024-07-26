@@ -1,4 +1,5 @@
 using System.Text;
+using Elevator.ControlSystem.Exceptions;
 using Elevator.ControlSystem.Models;
 using Serilog;
 
@@ -17,7 +18,7 @@ public class QueryHandler
     /// <param name="elevatorSystem">The elevator system model.</param>
     public QueryHandler(ElevatorSystemModel elevatorSystem)
     {
-        _elevatorSystem = elevatorSystem ?? throw new ArgumentNullException(nameof(elevatorSystem));
+        _elevatorSystem = elevatorSystem ?? throw new ElevatorControlSystemException(nameof(elevatorSystem));
     }
 
     /// <summary>
@@ -37,7 +38,7 @@ public class QueryHandler
             Log.Error(ex, "Error handling query");
         }
 
-        throw new InvalidOperationException();
+        throw new ElevatorControlSystemException();
     }
 
     /// <summary>

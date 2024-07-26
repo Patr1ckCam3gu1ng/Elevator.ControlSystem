@@ -1,3 +1,4 @@
+using Elevator.ControlSystem.Exceptions;
 using Elevator.ControlSystem.Models;
 using Elevator.ControlSystem.Services.Interfaces;
 using Serilog;
@@ -13,7 +14,7 @@ public class MovementService : IMovementService
 
     public MovementService(ElevatorSettings settings)
     {
-        _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+        _settings = settings ?? throw new ElevatorControlSystemException(nameof(settings));
     }
 
     /// <summary>

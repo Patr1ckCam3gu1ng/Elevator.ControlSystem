@@ -1,3 +1,4 @@
+using Elevator.ControlSystem.Exceptions;
 using Elevator.ControlSystem.Models;
 using Elevator.ControlSystem.Services;
 using Microsoft.Extensions.Configuration;
@@ -22,8 +23,8 @@ public class ConfigurationTests
             .AddJsonFile("testsettings.json", optional: false, reloadOnChange: true);
 
         _configuration = configBuilder.Build();
-        _elevatorSettings = _configuration.GetSection("ElevatorSettings").Get<ElevatorSettings>() ?? throw new InvalidOperationException();
-        _requestSettings = _configuration.GetSection("RequestSettings").Get<RequestSettings>() ?? throw new InvalidOperationException();
+        _elevatorSettings = _configuration.GetSection("ElevatorSettings").Get<ElevatorSettings>() ?? throw new ElevatorControlSystemException("ElevatorSettings is missing");
+        _requestSettings = _configuration.GetSection("RequestSettings").Get<RequestSettings>() ?? throw new ElevatorControlSystemException("RequestSettings is missing");
     }
 
     /// <summary>

@@ -64,6 +64,17 @@ The Singleton pattern ensures that a class has only one instance and provides a 
 
 ---
 
+## Exception Handling
+
+### Custom Exception: `ElevatorControlSystemException`
+
+In this project, a custom exception class `ElevatorControlSystemException` has been introduced to provide more specific error handling. 
+
+The purpose of using `ElevatorControlSystemException` is to standardize the error handling mechanism across the application and provide more meaningful error messages. By using a custom exception, it becomes easier to identify and debug issues specific to the "elevator control system".
+
+
+---
+
 ## Unit Tests
 
 The project includes unit tests to ensure the functionality of key components. The tests are implemented using **MSTest**.
